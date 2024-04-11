@@ -171,8 +171,10 @@ import math
 #         other_latitude = math.radians(other.latitude)
 #         other_longitude = math.radians(other.longitude)
 #
-#         dist = 6371 * math.acos(math.sin(self_latitude) * math.sin(other_latitude) +
-#                                 math.cos(self_latitude) * math.cos(other_latitude) *
+#         dist = 6371 * math.acos(math.sin(self_latitude) * 
+#                math.sin(other_latitude) +
+#                                 math.cos(self_latitude) * 
+#                                 math.cos(other_latitude) *
 #                                 math.cos(self_longitude - other_longitude))
 #         return dist
 #
@@ -232,12 +234,15 @@ class Student(Human):
         someone.answer_question(question)
         print()
 
+
 class Mentor(Human):
     def answer_question(self, question):
         if question == 'мне грустненько, что делать?':
             print('Держись, всё получится. Хочешь видео с котиками?')
         else:
             super().answer_question(question)
+
+
 class CodeReviewer(Human):
     def answer_question(self, question):
         if question == 'что не так с моим проектом?':
@@ -262,9 +267,12 @@ ira = Curator('Ира')
 eugeniy = CodeReviewer('Евгений')
 vitaliy = Human('Виталий')
 
-pit.ask_question(marina,'мне грустненько, что делать?')
-pit.ask_question(ira,'мне грустненько, что делать?')
-pit.ask_question(eugeniy,'когда каникулы?')
-pit.ask_question(eugeniy,'что не так с моим проектом?')
-pit.ask_question(vitaliy,'как устроиться на работу питонистом?')
-pit.ask_question(ira,'как устроиться работать питонистом?')
+pit.ask_question(marina, 'мне грустненько, что делать?')
+pit.ask_question(ira, 'мне грустненько, что делать?')
+pit.ask_question(eugeniy, 'когда каникулы?')
+pit.ask_question(eugeniy, 'что не так с моим проектом?')
+pit.ask_question(vitaliy, 'как устроиться на работу питонистом?')
+pit.ask_question(ira, 'как устроиться работать питонистом?')
+
+
+input()
