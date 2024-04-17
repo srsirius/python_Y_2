@@ -2,8 +2,11 @@ import datetime as dt
 
 
 class Record:
-
+    '''Класс создат объекты в которых хранятся данные о кол-ве, дате и
+    комнтарий. При осутствии даты, сохраняется дата на момент
+    создания объекта'''
     def __init__(self, amount, comment, date='date_now') -> None:
+
         self.amount = amount
         self.comment = comment
         self.date = date
@@ -16,6 +19,11 @@ class Record:
 
 
 class Calculator:
+    '''Класс Calculator прнимает на вход кол-во едениц которые можно потрать.
+    Имее три функции add_record, get_today_stats и get_week_stats.
+    add_record добавляет обьект класса Record в список records.
+    get_today_stats возвращает кол-во единиц потраченых за день.
+    get_week_stats возвращает кол-во единиц потраченых за неделю'''
     def __init__(self, limit) -> None:
         self.limit = limit
         self.records: list = []
@@ -42,24 +50,33 @@ class Calculator:
 
 
 class CaloriesCalculator(Calculator):
+    '''Унаследован от класса Calculator.
+    Добавлена функция get_calories_remained которая возвращает строку
+    с данными сколько сегодня можно еще съесть(в кКал)'''
     def get_calories_remained(self) -> str:
         result = 'Хватит есть!'
         callories = self.limit - self.get_today_stats()
 
         if callories > 0:
-            result = f'Сегодня можно съесть что-нибудь ещё, но с общей 
-                     калорийностью не более {callories} кКал'
-        
+            result = (f'Сегодня можно съесть что-нибудь ещё, но с общей '
+                      f'калорийностью не более {callories} кКал')
+        else:
+            result
+
         return result
 
 
 class CashCalculator(Calculator):
+    '''Унаследован от класса Calculator.
+    Добавлена функция get_today_cash_remained которая примает а вход 
+    валюту(rub, usd или eur) и возвращает строку
+    с данными сколько сегодня можно еще потратить в укзанной валюте)'''
 
     USD_RATE = 94.07
     EURO_RATE = 99.93
 
     def get_today_cash_remained(self, currency) -> str:
-        
+
         result = 'Денег нет, держись'
 
         balance = self.limit - self.get_today_stats()
@@ -90,13 +107,24 @@ cash_calculator = CashCalculator(1000)
 r1 = Record(750, 'comment 1')
 r2 = Record(750, 'comment 2')
 r3 = Record(100, 'comment 3', '11.04.2024')
-r4 = Record(100, 'comment 4', '10.04.2024')
 
 cash_calculator.add_record(r1)
 cash_calculator.add_record(r2)
 cash_calculator.add_record(r3)
-cash_calculator.add_record(r4)
 
 print(cash_calculator.get_today_cash_remained('eur'))
 print(cash_calculator.get_today_stats())
 print(cash_calculator.get_week_stats())
+print(Record.__doc__)
+print()
+
+r4 = Record(amount=1186, comment='Кусок тортика. И ещё один.')
+r5 = Record(amount=84, comment='Йогурт.')
+r6 = Record(amount=1240, comment='Баночка чипсов.')
+
+callories_calc = CaloriesCalculator(2500)
+callories_calc.add_record(r4)
+callories_calc.add_record(r5)
+callories_calc.add_record(r6)
+
+print(callories_calc.get_week_stats())
